@@ -1,48 +1,96 @@
-# concepts/closed-loop.concept.yaml ; ES-035 ; base WSF:CLOSED_LOOP
+# concepts/closed-loop.concept.yaml, Closed Loop, and ES-034
+#
+# Per ES-ADR-034 + CR-ES-034.
+# semantic_kind: behavioral_pattern (NOT a specialization of Process; NOT a WSF-level canonical concept).
+# Foundation reference: wsf:ClosedLoop (Tier 3 Baseline, ADR-WSF-38).
+# Status: Established.
+# Supersedes: prior Deprecated stub (replaced 2026-09-28 per user-authoritative model).
+
 id: ES:CONCEPT:closed-loop
 canonical_name: Closed Loop
-concept_type: foundational-reference
+concept_type: behavioral-pattern
 status: Established
-version: 2.8.0
-date: 2026-09-27
+version: 2.10.0
+date: 2026-09-28
 author: Emmanuel A. Otchere (cardinal author rule, 2026-09-24)
 governance: enterprise-semantics
 base_concept: WSF:CLOSED_LOOP
 authority: WSF
 source_decision: ADR-WSF-38 (Baseline, WSF PR #19 MERGED 2026-09-27)
-es_integration: ES-ADR-035 + CR-ES-035
+es_integration: ES-ADR-034 + CR-ES-034
+supersedes: prior Deprecated stub (2026-09-28, was WSF Closed Loop integration framing)
 definition: |
-  A Closed Loop is a control structure with four stages (sense, decide,
-  act, learn) connected by feedback such that the output of act influences
-  subsequent sense iterations. Per ADR-WSF-38 section 2.
+  A Closed Loop is a bounded behavioral cycle in which observations
+  of conditions or outcomes are fed back into subsequent
+  interpretation, decision, action, or adaptation toward an intended
+  objective or outcome.
+
+  Per ES-ADR-034 section 2.
 properties:
-  - sense_stage
-  - decide_stage
-  - act_stage
-  - learn_stage
-  - feedback_connection
-  - target_state
-  - policy
+  - objective
+  - observation
+  - interpretation
+  - decision
+  - action
+  - outcome
+  - feedback
+  - adaptation
+  - intervention
+  - escalation
+  - context
 relationships:
   - subject: ES:CONCEPT:closed-loop
-    predicate: specializes
+    predicate: foundation-anchored-to
     object: external:concept:WSF:CLOSED_LOOP
     status: established
+    provenance: ES-ADR-034 section 2 ; ADR-WSF-38
   - subject: ES:CONCEPT:closed-loop
-    predicate: distinct-from-workflow
-    object: external:concept:workflow
+    predicate: uses-feedback-from
+    object: external:concept:outcome
     status: established
+    provenance: CR-ES-034 section 4
   - subject: ES:CONCEPT:closed-loop
-    predicate: distinct-from-operations
-    object: external:concept:operations
+    predicate: influences
+    object: external:concept:subsequent_behavior
     status: established
+    provenance: CR-ES-034 section 4
+  - subject: ES:CONCEPT:closed-loop
+    predicate: designed-by
+    object: external:concept:loop-engineering
+    status: established
+    provenance: ES-ADR-033 section 5 ; ES-ADR-034 section 9
+  - subject: ES:CONCEPT:closed-loop
+    predicate: improved-by
+    object: external:concept:loop-engineering
+    status: established
+    provenance: ES-ADR-033 section 5 ; ES-ADR-034 section 9
 agentic_autonomous_independence:
-  closed_loop_does_not_imply_autonomous_closed_loop: true
+  closed_loop_does_not_imply_agentic: true
+  closed_loop_does_not_imply_autonomous: true
+  four_state_characterization:
+    - conventional
+    - agentic_closed_loop_deferred
+    - autonomous_closed_loop_per_ES-035
+    - agentic_autonomous_closed_loop_deferred
 ai_boundary:
-  not_required: true
+  closed_loop_requires_ai: false
   ai_closed_loop_is_canonical_reject: true
   ai_closed_loop_realized_as_example: true
+cross_context_instantiation:
+  - Process
+  - Workflow
+  - Service
+  - System
+  - Operations
+  - Network
+  - Ecosystem
+  - Enterprise
+semantic_kind_note: |
+  Closed Loop is a behavioral_pattern (per ES-ADR-034 section 1).
+  It is not a WSF-level specialization nor a subclass of Process.
+  It is a behavioral pattern instantiable across Process, Workflow,
+  Service, System, Operations, Network, Ecosystem, Enterprise.
 provenance:
-  source: [ADR-WSF-38]
-  decision: [ES-ADR-035]
-  implementation: [CR-ES-035]
+  source: [ES-ADR-033, ADR-WSF-38]
+  decision: [ES-ADR-034]
+  implementation: [CR-ES-034]
